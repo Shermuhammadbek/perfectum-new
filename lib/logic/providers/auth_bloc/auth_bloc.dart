@@ -1,6 +1,4 @@
-import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perfectum_new/logic/models/auth_model.dart';
@@ -14,30 +12,56 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
-  Dio dio = Dio();
+
   AuthRepository authRepository = AuthRepository();
-  AuthResponse? userAccessKeys;
 
-  AuthBloc() : super(AuthInitial()) {
+  AuthBloc() :  super(AuthInitial()) {
+
     on<AuthInitialEvent>((event, emit) async {
-
       emit(AuthLoading());
+      final userPin = await SecureStorage.getUserPin();
+      if(userPin != null) {
+        return emit(Authenticated());
+      } else {
+        final userAccessKeys = await SecureStorage.getAuthResponse(type: UserType.guest);
 
-      final userAccessKeys = await SecureStorage.getAuthResponse(type: UserType.guest);
-
-      if(userAccessKeys == null) {
-        final userAccessKeys = await authRepository.getTokenFromApi();
-        log("${userAccessKeys?.refreshToken} refresh token from api");
-        if(userAccessKeys != null) {
-          await SecureStorage.saveAuthResponse(
-            response: userAccessKeys,
-          );
-        } else {
-          
+        if(userAccessKeys == null) {
+          final userAccessKeys = await authRepository.getTokenFromApi();
+          if(userAccessKeys != null) {
+            await SecureStorage.saveAuthResponse(
+              response: userAccessKeys,
+            );
+          } else {
+            emit(AuthError());
+          }
+          return emit(ShowOnboarding());
         }
+
+        return emit(Unauthenticated());
       }
-      return emit(AuthNavigateToLogin());
     });
+
+    on<AuthSendOtp>((event, emit) async {
+
+      emit(AuthSensOtpLoading());
+
+      final result = await authRepository.sendVerificationCode(
+        userNumber: event.phoneNumber,
+      );
+
+      return result != null 
+        ? emit(AuthSendOtpSuccess(
+          userNumber: result.data.phoneNumber,
+        )) 
+        : emit(AuthSendOtpError(
+          message: "Failed to send OTP",
+        ));
+    },);
+
+    on<AuthVerfyOtp>((event, emit) {
+      // emit(Auth)
+    },);
+
   }
 
 

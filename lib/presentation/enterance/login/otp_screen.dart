@@ -102,7 +102,6 @@ class _OtpScreenState extends State<OtpScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    log("$_messages");
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -178,11 +177,8 @@ class _OtpScreenState extends State<OtpScreen> with WidgetsBindingObserver {
                           context, PasswordScreen.routeName,
                         );
                       }
-                      log("$state otp Screen state");
                     },
                     builder: (context, state) {
-                      log("$otpValue value");
-                      log("$isLoading isloading");
                       return Padding(
                         padding: const EdgeInsets.only(left: 16, right: 16),
                         child: LoadingButton(

@@ -10,3 +10,15 @@ class LogoutEvent extends AuthEvent {
 
   LogoutEvent({this.message});
 }
+
+class AuthSendOtp extends AuthEvent {
+  final String phoneNumber;
+
+  AuthSendOtp({required this.phoneNumber});
+}
+
+class AuthVerfyOtp extends AuthEvent {
+  final String otpCode;
+
+  AuthVerfyOtp({required this.otpCode});
+}

@@ -8,6 +8,7 @@ class SecureStorage {
 
   static const String guestAccessKey = "guestAccessKey";
   static const String userAccessKey = "userAccessKey";
+  static const String userPinKey = "userPinKey";
 
   // ignore: unused_field
   static const _storage = FlutterSecureStorage(
@@ -46,6 +47,25 @@ class SecureStorage {
     } catch (e) {log("$e getAuthResponse error");}
     return null;
   }
+
+
+  static Future<void> saveUserPin({required String pin}) async {
+    try {
+      await _storage.write(key: userPinKey, value: pin);
+    } catch (e) {
+      log("$e userPin error");
+    }
+  }
+
+  static Future<String?> getUserPin() async {
+    try {
+      return await _storage.read(key: userPinKey);
+    } catch (e) {
+      log("$e getUserPin error");
+      return null;
+    }
+  }
+
 
 
   static Future<void> clear({UserType? type}) async {

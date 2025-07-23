@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:perfectum_new/logic/providers/auth_bloc/auth_bloc.dart';
 import 'package:perfectum_new/preferences/display_status/display_status_screen.dart';
 import 'package:perfectum_new/preferences/display_status/status_enum.dart';
 import 'package:perfectum_new/presentation/enterance/book_number/screens/look_up_locations.dart';
@@ -32,12 +33,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void sendOtp() {
     if(controller.text.length == 9){
-      context.read<LogInBloc>().add(
-        LoginGetVerificationCode(
-          phone: "998${controller.text}",
-          context: context
-        ),
+      
+      context.read<AuthBloc>().add(
+        AuthSendOtp(phoneNumber: "998${controller.text}"),
       );
+
+      // context.read<LogInBloc>().add(
+      //   LoginGetVerificationCode(
+      //     phone: "998${controller.text}",
+      //     context: context
+      //   ),
+      // );
     } else {
       Get.snackbar(
         "Enter valid phone number", "The entered phone number length must be 9.",
@@ -158,12 +164,12 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  BlocConsumer<LogInBloc, LoginState>(
+                  BlocConsumer<AuthBloc, AuthState>(
                     listener: (context, state) {
-                      if(state is LoginVerificationCodeLoading || state is LoginVerificationCodeSendingError){
+                      if(state is AuthSensOtpLoading || state is AuthSendOtpError){
                         isLoading = !isLoading;
                       }
-                      if(state is LoginVerificationCodeSended){
+                      if(state is AuthSendOtpSuccess){
                         isLoading = !isLoading;
                         Navigator.push(
                           context, MaterialPageRoute(

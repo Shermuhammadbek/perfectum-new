@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
 import 'package:perfectum_new/logic/models/auth_model.dart';
@@ -12,7 +14,7 @@ class AuthInterceptor extends Interceptor {
   
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    // Token qo'shish
+    log("onRequest: ${options.method} ${options.path}");
     final authResponse = await SecureStorage.getAuthResponse(type: UserType.guest);
     if (authResponse != null) {
       options.headers['Authorization'] = 'Bearer ${authResponse.accessToken}';
