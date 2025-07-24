@@ -22,7 +22,7 @@ class AuthRepository extends AppApiServices {
   }
 
   // get guest token
-  Future<AuthResponse?> getTokenFromApi() async {
+  static Future<AuthResponse?> getTokenFromApi() async {
     try {
       final device = await PlatformInfo.getDeviceInfoForApi();
       
@@ -58,13 +58,13 @@ class AuthRepository extends AppApiServices {
     return null;
   }
 
-  Future<bool> verifyOtp({required String userPhone, required String otp}) async {
+  Future<bool> verifyOtp({required String userPhone, required String code}) async {
     try {
       final resp = await appDio.post(
         MyApiKeys.verifyOtp,
         data: {
           "msisdn": userPhone,
-          "otp": otp,
+          "otp": code,
         }
       );
 

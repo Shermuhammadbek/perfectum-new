@@ -11,22 +11,7 @@ class SecureStorage {
   static const String userPinKey = "userPinKey";
 
   // ignore: unused_field
-  static const _storage = FlutterSecureStorage(
-    aOptions: AndroidOptions(
-      encryptedSharedPreferences: true,
-      sharedPreferencesName: 'perfectum_prefs',
-      preferencesKeyPrefix: 'perfectum_',
-      keyCipherAlgorithm: KeyCipherAlgorithm.RSA_ECB_PKCS1Padding,
-      storageCipherAlgorithm: StorageCipherAlgorithm.AES_GCM_NoPadding,
-    ),
-    iOptions: IOSOptions(
-      groupId: null,
-      accountName: 'perfectum_secure_storage',
-      accessibility: KeychainAccessibility.first_unlock_this_device,
-      synchronizable: false,
-    ),
-
-  );
+  static const _storage = FlutterSecureStorage();
 
   static Future<void> saveAuthResponse({required AuthResponse response,}) async {
     await _storage.write(

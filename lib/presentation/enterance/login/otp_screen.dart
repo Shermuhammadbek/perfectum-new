@@ -181,7 +181,7 @@ class _OtpScreenState extends State<OtpScreen> with WidgetsBindingObserver {
                     builder: (context, state) {
                       return Padding(
                         padding: const EdgeInsets.only(left: 16, right: 16),
-                        child: LoadingButton(
+                        child: MyLoadingButton(
                           isLoading: isLoading,
                           label: "Подтвердить",
                           color: otpValue.length == 6

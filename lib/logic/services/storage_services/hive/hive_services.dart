@@ -18,6 +18,13 @@ class HiveServices {
     log("Hive open Box");
   }
 
+  Future<void> setFirstTime() async {
+    await box.put("firstTime", false);
+  }
+
+  bool isFirstTime() {
+    return box.get("firstTime") ?? true;
+  }
 
   // Theme settings
   void setTheme(ThemeMode theme) async {

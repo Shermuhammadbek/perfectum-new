@@ -26,9 +26,9 @@ class SplashScreen extends StatelessWidget {
           );
         }
         if(state is ShowOnboarding) {
-          Navigator.pushReplacementNamed(
-            context, OnboardingScreen.routeName,
-          );
+          Navigator.push(context, MaterialPageRoute(builder: (ctx){
+            return const OnboardingScreen(nextRoute: LoginScreen.routeName,);
+          }));
         }
 
         if(state is AuthError) {

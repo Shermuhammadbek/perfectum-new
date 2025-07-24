@@ -18,7 +18,10 @@ class AuthSendOtp extends AuthEvent {
 }
 
 class AuthVerfyOtp extends AuthEvent {
-  final String otpCode;
+  final String userPhone;
+  final String code;
 
-  AuthVerfyOtp({required this.otpCode});
+  AuthVerfyOtp({
+    required this.code, required this.userPhone,
+  });
 }

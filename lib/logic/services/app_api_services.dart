@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:perfectum_new/logic/repositories/auth_interceptor.dart';
+import 'package:perfectum_new/logic/services/app_main_interceptor.dart';
 import 'package:perfectum_new/source/material/my_api_keys.dart';
 
 class AppApiServices {
@@ -24,7 +24,7 @@ class AppApiServices {
     _appAuthDio = Dio(baseOptions);
 
     appDio.interceptors.addAll([
-      AuthInterceptor(dio: _appAuthDio),
+      AppMainInterceptor(dio: _appAuthDio),
       getLogInterceptor()
     ]);
   }

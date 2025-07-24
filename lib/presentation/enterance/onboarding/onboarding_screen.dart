@@ -1,10 +1,12 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 
 class OnboardingScreen extends StatelessWidget {
   static const String routeName = "/onboarding_screen";
   final String? nextRoute;
-  const OnboardingScreen({super.key, required this.nextRoute});
+
+  
+  const OnboardingScreen({super.key, this.nextRoute,});
 
   @override
   Widget build(BuildContext context) {

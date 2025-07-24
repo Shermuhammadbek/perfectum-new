@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:perfectum_new/presentation/enterance/login/login_screen.dart';
 import 'package:perfectum_new/presentation/enterance/login/password_screen.dart';
 import 'package:perfectum_new/presentation/enterance/login/splash_screen.dart';
+import 'package:perfectum_new/presentation/enterance/onboarding/onboarding_screen.dart';
 import 'package:perfectum_new/presentation/main_screens/home.dart';
 
 Map<String, Widget Function(BuildContext)> myRoutes = {
@@ -19,6 +20,9 @@ Map<String, Widget Function(BuildContext)> myRoutes = {
 
   SplashScreen.routeName: (ctx)
     {return const SplashScreen();},
+
+  OnboardingScreen.routeName: (ctx)
+    {return const OnboardingScreen();}
 
 };
 

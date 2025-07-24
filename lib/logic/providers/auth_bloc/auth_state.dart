@@ -28,3 +28,14 @@ class AuthSendOtpError extends AuthState {
 
   AuthSendOtpError({this.message});
 }
+
+
+class AuthVerfyOtpLoading extends AuthState {}
+class AuthVerfyOtpSuccess extends AuthState {
+  final String userNumber;
+  AuthVerfyOtpSuccess({required this.userNumber});
+}
+class AuthVerfyOtpError extends AuthState {
+  final String? message;      
+  AuthVerfyOtpError({this.message});
+}
